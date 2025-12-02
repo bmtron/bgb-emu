@@ -10,7 +10,7 @@ OBJDIR := obj
 SRCDIR := src
 
 TARGET := $(BINDIR)/bgb-emu
-SRCS := $(wildcard $(SRCDIR)/*.c)
+SRCS := $(wildcard $(SRCDIR)/*.c $(SRCDIR)/**/*.c)
 OBJS := $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 
 all: $(TARGET)
@@ -25,7 +25,8 @@ release: $(TARGET)
 $(TARGET): $(OBJS) | $(BINDIR)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR):

@@ -7,10 +7,14 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include "cpu/cpu.h"
+
 int loadTestRom(MemMap *mmap);
 int readCartHeader(MemMap *mmap);
+
 int main(int argc, char **argv) {
   MemMap *mmap = malloc(sizeof(MemMap));
+  Cpu *cpu = malloc(sizeof(Cpu));
   printf("Size: %ld\n", sizeof(*mmap));
   printf("ROM Size: %d\n", ROM_SIZE);
 
@@ -43,6 +47,7 @@ int main(int argc, char **argv) {
   }
   cleanup(window, renderer);
   free(mmap);
+  free(cpu);
 
   return 0;
 }

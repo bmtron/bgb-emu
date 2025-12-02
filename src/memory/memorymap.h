@@ -1,3 +1,5 @@
+#ifndef MMAP_H
+#define MMAP_H
 #define ROM_SIZE 0x4000
 #define VRAM_SIZE 0x2000
 #define EXRAM_SIZE 0x2000
@@ -24,4 +26,4 @@ typedef struct {
     char hram[HRAM_SIZE];     // FF80 - FFFE 
     char ie;            // FFFF - FFFF
 } MemMap;
-
+#endif
