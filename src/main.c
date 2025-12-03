@@ -30,7 +30,25 @@ int main(int argc, char** argv) {
 
         int readres = readCartHeader(mmap);
 
+        cpu->registers.PC = 0x0100;
+        cpu->registers.SP = 0xFFFE;
         while (1) {
+                // test loop
+                {
+                        uint8_t opcode = mem_read(cpu->registers.PC, mmap);
+                        cpu->registers.PC++;
+                        switch (opcode) {
+                                case 0x00:
+                                        break;
+                                default:
+                                        break;
+                        }
+                        if (1) {
+                                printf("Unknown opcode: 0x%02X at PC: 0x%04X\n",
+                                       opcode, cpu->registers.PC);
+                                exit(1);
+                        }
+                }
                 prepareScene(renderer);
 
                 SDL_Event event;
@@ -66,8 +84,9 @@ int readCartHeader(MemMap* mmap) {
         return 0;
 }
 int loadTestRom(MemMap* mmap) {
-        int gbfile = open("/home/bmtron/projects/c-misc/bgb-emu/PokemonBlue.gb",
-                          O_RDWR, S_IRWXU);
+        int gbfile = open(
+            "/home/bmtron/projects/c-misc/bgb-emu/testfiles/PokemonBlue.gb",
+            O_RDWR, S_IRWXU);
         if (gbfile == -1) {
                 printf("Error opening file\n");
                 perror("open");
